@@ -35,8 +35,8 @@ color: #FF9900;
 <!-- Title and Name --> 
 <h1>CS 4476 Group Project</h1> 
 <span style="font-size: 20px; line-height: 1.5em;"><strong>Members: Winter Galyon, Patrick Liu, Connor Reitz, Joey Crawford</strong></span><br>
-<span style="font-size: 18px; line-height: 1.5em;">Computer Vision Class Project Fall 2020</span><br>
-<span style="font-size: 18px; line-height: 1.5em;"> Georgia Tech CS 4476 Devi Parikh</span>
+<span style="font-size: 18px; line-height: 1.5em;">Computer Vision Class Project, Fall 2020</span><br>
+<span style="font-size: 18px; line-height: 1.5em;"> Georgia Tech CS 4476, Intructor: Devi Parikh</span>
 <hr>
 
 <!-- Goal -->
@@ -63,28 +63,21 @@ Our project aims to identify where an input satellite image was taken relative t
 Our experiment is to compare a set of images of different sizes and orientations from random locations on the Google Mars ‘visible’ map with the full image. Knowing where the image is on the map, determine how accurately the program was able to locate where the image was at using the error calculation on the x and y location of the predicted location as well as the size and orientation. We will begin by knowing how large the window size is and that the orientation is north south (the same as the google mars source image). Then as we succeed we will make the algorithm more robust by using different orientations and gradually decreasing the window size of input images to prove greater efficacy.
 
 For our success criteria, the program is expected to be slightly less accurate with smaller areas of the map, as there are less features that we can extract to define the image. Initially we will start off by demonstrating a brute-force approach, which will be very computationally expensive and take very long to run as a result. We will then contrast this brute-force approach with the other algorithms/optimizations that we found through our research and compare the computation time as well as accuracy to our other approaches that we present. To actually assess the runtime and accuracy, we plan on using the time library for Python. For computing accuracy, we plan on using several metrics such as SSD and RMSE to compare our approaches.
+
+<h3>Resources</h3>
+<ul>
+  <li> <a href= "https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.443.1732&rep=rep1&type=pdf River location
+  http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.9.9601&rep=rep1&type=pdf"> Finding water bodies with neural nets</a> </li>
+  <li> <a href="https://medium.com/descarteslabs-team/mapmaking-in-the-age-of-artificial-intelligence-da9e71be21d3">
+  Finding features in satellite images</a> </li>
+  <li> <a href="https://www.sciencedirect.com/science/article/pii/S2468232216300555">
+  Location using chamfer distance </a> </li>
+  <li> <a href="https://www.google.com/mars/">Mars elevation map </a> </li>
+  <li> <a href="https://link.springer.com/chapter/10.1007/11744023_32"> SURF: Speeded Up Robust Features </a> </li>
+  <li> <a href="https://towardsdatascience.com/sift-scale-invariant-feature-transform-c7233dc60f37"> SIFT </a> </li>
+  <li> <a href="https://docs.python.org/3/library/time.html">Python time documentation </a> </li>
+</ul>
 <br><br>
-
-<!-- Main Results Figure --> 
-<div style="text-align: center;">
-<img style="height: 300px;" alt="" src="results.png">
-</div>
-<br><br>
-
-{% comment %} <!-- Results -->
-<h3>Qualitative results</h3>
-Show several visual examples of inputs/outputs of your system (success cases and failures) that help us better understand your approach.
-<br><br>
-
-<!-- Main Results Figure --> 
-<div style="text-align: center;">
-<img style="height: 300px;" alt="" src="qual_results.png">
-</div>
-<br><br> {% endcomment %}
-
-
-
-
   <hr>
   <footer> 
   <p>© Patrick Liu</p>
