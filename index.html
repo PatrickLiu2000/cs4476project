@@ -34,42 +34,35 @@ color: #FF9900;
 
 <!-- Title and Name --> 
 <h1>CS 4476 Group Project</h1> 
-<span style="font-size: 20px; line-height: 1.5em;"><strong>Members: Winter, Patrick Liu, Connor Reitz, Joey Crawford</strong></span><br>
+<span style="font-size: 20px; line-height: 1.5em;"><strong>Members: Winter Galyon, Patrick Liu, Connor Reitz, Joey Crawford</strong></span><br>
 <span style="font-size: 18px; line-height: 1.5em;">Computer Vision Class Project Fall 2020</span><br>
 <span style="font-size: 18px; line-height: 1.5em;"> Georgia Tech CS 4476 Devi Parikh</span>
 <hr>
 
-Please see <a href="http://vision.cs.utexas.edu/projects/adapted_attributes/">this</a> for an example of how to lay out the various details of your project. You may need to provide more details than this, beause you will not be submitting an associated paper to accompany the webpage. So the page should be self-contained
-
 <!-- Goal -->
-<h3>Abstract</h3>
+<h3>Problem Statement</h3>
 
-One or two sentences on the motivation behind the problem you are solving. One or two sentences describing the approach you took. One or two sentences on the main result you obtained.
+Our project aims to identify where an input satellite image was taken relative to a known comprehensive satellite image. The case we hope to apply this to is an elevation map of mars provided by Google Mars. The input to our algorithm is an image of the surface of Mars and the output would be the location of that image relative to the elevation map we use as a reference as well as the orientation and size of the image relative to the Google Mars map, which could be used to identify the elevation the image would have been taken at if from a satellite. 
 <br><br>
-<!-- figure -->
-<h3>Teaser figure</h3>
-A figure that conveys the main idea behind the project or the main application being addressed.
-<br><br>
-<!-- Main Illustrative Figure --> 
-<div style="text-align: center;">
-<img style="height: 200px;" alt="" src="mainfig.png">
-</div>
 
-<br><br>
-<!-- Introduction -->
-<h3>Introduction</h3>
-Motivation behind the problem you are solving, what applications it has, any brief background on the particular domain you are working in (if not regular RBG photographs), etc. If you are using a new way to solve an existing problem, briefly mention and describe the existing approaches and tell us how your approach is new.
-
-<br><br>
 <!-- Approach -->
 <h3>Approach</h3>
-Describe very clearly and systematically your approach to solve the problem. Tell us exactly what existing implementations you used to build your system. Tell us what obstacles you faced and how you addressed them. Justify any design choices or judgment calls you made in your approach.
+<ul>
+  <li>Our approach will result in a confidence matrix of the possible locations for the center of the viewing window (the input image). This will be constructed using several approaches which will be weighted and combined into a single nxm matrix where n and m are the dimensions of the google mars source image. (we can orient the input image when we get to that by matching the average gradient direction of the input window and the Google Mars picture)</li>
+  <li>One approach we will conduct is to find the center of a large number of the craters in the source image (elevation map from Google Mars) and store these as a nxm matrix wherein the center of each crater will be recorded as defined by a run of the hough circle detector (using gradients to decrease noise) on a set number of known radii. This will result in a number (R) of nxm matrices, one for each radius we choose to edge detect with.This algorithm will then be run on the input image and another R matrices will be made with a number of centers. This will then be randomly overlaid with the source image and a Gradient Descent algorithm with Simulated Annealing will be run to gradually converge on a local minimum (ideally the true minimum) for the distance to predicted crater centers. This will be run many times to prevent the location of local minima rather than the true minimum. The equation we want to optimise is the sum of distances between each center in the input to the closest centers in the source image. We will begin by writing the algorithm with a known window size for the input and known orientation (the same as the Google Mars orientation).</li>
+
+  <li>We will also be implementing a version of Speeded-Up Robust Features (SURF) to map an image to a location on Mars. To break down my process, the algorithm will have three parts: interest point identification, local neighborhood description, and matching. Utilizing the integral image, the algorithm will filter and use a blob detector to detect interest points. Different scales are obtained by applying box filters of different sizes. Local orientation vectors are then calculated using Haar wavelet responses weighed by a Gaussian function to determine the dominant orientation. The descriptors from the image and Mars will be compared to determine matching pairs. </li>
+  <li> Another technique we can use to perform feature detection and matching is by using SIFT (scale invariant feature transform), which is robust to rotation and scale. Initially to actually extract the features, we use a space-scale blob detector to identify the local maxima in the image. We then create a vector based on these extracted features using SIFT and use a thresholding along with euclidean distance ratios to feature match. </li>
+  <li>One last technique we will experiment with (measuring accuracy and speed) is by using the BRIEF (binary robust independent elementary features) feature detection and matching method. This method matches keypoints between the test images and the original image by using binary feature vectors. The image will first be smoothed by a Gaussian kernel. Then, the algorithm will find keypoints in the image and create descriptors to encode a numerical “fingerprint” so we can tell each feature apart from another. This image will then take image patches around the keypoint pixels, convert them into binary feature vectors, and represent the objects for matching. </li>
+
+</ul>
 
 <br><br>
 <!-- Results -->
 <h3>Experiments and results</h3>
-Provide details about the experimental set up (number of images/videos, number of datasets you experimented with, train/test split if you used machine learning algorithms, etc.). Describe the evaluation metrics you used to evaluate how well your approach is working. Include clear figures and tables, as well as illustrative qualitative examples if appropriate. Be sure to include obvious baselines to see if your approach is doing better than a naive approach (e.g. for classification accuracy, how well would a classifier do that made random decisions?). Also discuss any parameters of your algorithms, and tell us how you set the values of those parameters. You can also show us how the performance varies as you change those parameter values. Be sure to discuss any trends you see in your results, and explain why these trends make sense. Are the results as expected? Why?
+Our experiment is to compare a set of images of different sizes and orientations from random locations on the Google Mars ‘visible’ map with the full image. Knowing where the image is on the map, determine how accurately the program was able to locate where the image was at using the error calculation on the x and y location of the predicted location as well as the size and orientation. We will begin by knowing how large the window size is and that the orientation is north south (the same as the google mars source image). Then as we succeed we will make the algorithm more robust by using different orientations and gradually decreasing the window size of input images to prove greater efficacy.
 
+For our success criteria, the program is expected to be slightly less accurate with smaller areas of the map, as there are less features that we can extract to define the image. Initially we will start off by demonstrating a brute-force approach, which will be very computationally expensive and take very long to run as a result. We will then contrast this brute-force approach with the other algorithms/optimizations that we found through our research and compare the computation time as well as accuracy to our other approaches that we present. To actually assess the runtime and accuracy, we plan on using the time library for Python. For computing accuracy, we plan on using several metrics such as SSD and RMSE to compare our approaches.
 <br><br>
 
 <!-- Main Results Figure --> 
@@ -78,7 +71,7 @@ Provide details about the experimental set up (number of images/videos, number o
 </div>
 <br><br>
 
-<!-- Results -->
+{% comment %} <!-- Results -->
 <h3>Qualitative results</h3>
 Show several visual examples of inputs/outputs of your system (success cases and failures) that help us better understand your approach.
 <br><br>
@@ -87,14 +80,14 @@ Show several visual examples of inputs/outputs of your system (success cases and
 <div style="text-align: center;">
 <img style="height: 300px;" alt="" src="qual_results.png">
 </div>
-<br><br>
+<br><br> {% endcomment %}
 
 
 
 
   <hr>
   <footer> 
-  <p>© You Name Here</p>
+  <p>© Patrick Liu</p>
   </footer>
 </div>
 </div>
